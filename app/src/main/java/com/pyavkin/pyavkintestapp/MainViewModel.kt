@@ -1,8 +1,10 @@
 package com.pyavkin.pyavkintestapp
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pyavkin.pyavkintestapp.api.GifRepo
@@ -147,6 +149,30 @@ class MainViewModel(context: Context) : ViewModel() {
     override fun onCleared() {
         disposables.dispose()
         super.onCleared()
+    }
+
+    fun shareCurrentGif() {
+        val intent = Intent(Intent.ACTION_SEND)
+//        Log.d("PDF", file.path)
+
+        val fileUri = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().applicationContext.packageName + ".provider",
+            file
+        )
+        intent.putExtra(
+            Intent.EXTRA_STREAM,
+            fileUri
+        )
+        requireContext().grantUriPermission(
+            file.path,
+            fileUri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        intent.type = "application/pdf"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Поделиться файлом")
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Поделиться файлом")
+        startActivity(Intent.createChooser(intent, "Поделиться файлом"))
     }
 }
 

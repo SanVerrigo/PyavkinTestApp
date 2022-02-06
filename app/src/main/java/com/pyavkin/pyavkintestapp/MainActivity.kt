@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
         binding.tryAgainBtn.setOnClickListener {
             viewModel.initiateGifLoading(viewModel.currentTabValue)
         }
+        binding.shareBtn.setOnClickListener {
+            viewModel.shareCurrentGif()
+        }
         binding.tabsContainer.addOnTabSelectedListener(onTabSelectedListener)
         inhabitWithTabs()
     }

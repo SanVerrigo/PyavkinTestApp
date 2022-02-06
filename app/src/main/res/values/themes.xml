@@ -29,6 +29,12 @@
     <item name="android:tint">@color/fab_back_enabling</item>
   </style>
 
+  <style name="RoundIconButton">
+    <item name="android:background">?selectableItemBackgroundBorderless</item>
+    <item name="android:focusable">true</item>
+    <item name="android:clickable">true</item>
+  </style>
+
   <style name="Text.Size16.Additional.Medium.Button">
     <item name="android:paddingStart">4dp</item>
     <item name="android:paddingEnd">4dp</item>

@@ -52,7 +52,14 @@ class MainViewModel(context: Context) : ViewModel() {
             val gifInfo = tabInfo.loadedGifs[tabInfo.currentLoadedGifInd]
             currentGifDescription.postValue(gifInfo.description)
             refreshButtonsState()
-            loadGif(gifInfo.url, gifInfo.id, tabInfo.section.sectionName, gifInfo.description)
+            if (gifInfo.url == null) {
+                gifState.postValue(LoadState.Loaded(urlIsDefined = false))
+                disposeLoadingGif()
+            } else {
+                loadGif(
+                    gifInfo.url, gifInfo.id, tabInfo.section.name, gifInfo.description
+                )
+            }
         } else {
             gifState.postValue(LoadState.Loading)
             val gifsSingle: Single<List<GifEntity>> =
@@ -75,13 +82,22 @@ class MainViewModel(context: Context) : ViewModel() {
                         } else {
                             val gifInfo = tabInfo.loadedGifs[tabInfo.currentLoadedGifInd]
                             currentGifDescription.postValue(gifInfo.description)
-                            loadGif(
-                                gifInfo.url, gifInfo.id, tabInfo.section.name, gifInfo.description
-                            )
+                            if (gifInfo.url == null) {
+                                disposeLoadingGif()
+                                gifState.postValue(LoadState.Loaded(urlIsDefined = false))
+                            } else {
+                                loadGif(
+                                    gifInfo.url,
+                                    gifInfo.id,
+                                    tabInfo.section.name,
+                                    gifInfo.description
+                                )
+                            }
+
                         }
                     },
                     { error ->
-                        Log.e("Err", error.message!!)
+                        Log.e(TAG, error.message!!)
                     }
                 ).also { disposables.add(it) }
         }
@@ -95,13 +111,13 @@ class MainViewModel(context: Context) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { gifFileUri ->
-                    gifState.postValue(LoadState.Loaded)
+                    gifState.postValue(LoadState.Loaded(urlIsDefined = true))
                     currentGifUri.postValue(gifFileUri)
                     loadingGifDisposable.dispose()
                 },
                 { error ->
                     gifState.postValue(LoadState.Failed(error))
-                    Log.e("Err", error.message!!)
+                    Log.e(TAG, error.message!!)
                 }
             ).also { disposables.add(it) }
     }
@@ -157,6 +173,10 @@ class MainViewModel(context: Context) : ViewModel() {
     override fun onCleared() {
         disposables.dispose()
         super.onCleared()
+    }
+
+    companion object {
+        private const val TAG = "MainViewModel"
     }
 }
 

@@ -90,6 +90,19 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
 
+      <TextView
+          android:id="@+id/url_not_defined_warning"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingStart="32dp"
+          android:paddingEnd="32dp"
+          android:text="@string/url_not_defined_warning"
+          android:textAppearance="@style/Text.Size16.Medium"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
       <ImageView
           android:id="@+id/content_gif"
           android:layout_width="match_parent"
@@ -104,7 +117,6 @@
           android:id="@+id/loading_indicator"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:src="@drawable/gradient_back"
           android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"

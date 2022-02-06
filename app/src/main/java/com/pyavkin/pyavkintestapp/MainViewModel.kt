@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pyavkin.pyavkintestapp.api.GifRepo
@@ -177,28 +176,16 @@ class MainViewModel(context: Context) : ViewModel() {
         super.onCleared()
     }
 
-    fun shareCurrentGif() {
+    fun shareCurrentGif(context: Context) {
         val intent = Intent(Intent.ACTION_SEND)
-//        Log.d("PDF", file.path)
-
-        val fileUri = FileProvider.getUriForFile(
-            requireContext(),
-            requireContext().applicationContext.packageName + ".provider",
-            file
-        )
+        intent.type = "image/gif"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "GIF-image")
         intent.putExtra(
-            Intent.EXTRA_STREAM,
-            fileUri
+            Intent.EXTRA_TEXT,
+            context.getString(R.string.share_gif_text, currentGifDescription.value)
         )
-        requireContext().grantUriPermission(
-            file.path,
-            fileUri,
-            Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        intent.type = "application/pdf"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Поделиться файлом")
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Поделиться файлом")
-        startActivity(Intent.createChooser(intent, "Поделиться файлом"))
+        intent.putExtra(Intent.EXTRA_STREAM, currentGifUri.value)
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gif)))
     }
 
     companion object {

@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.initiateGifLoading(viewModel.currentTabValue)
         }
         binding.shareBtn.setOnClickListener {
-            viewModel.shareCurrentGif()
+            viewModel.shareCurrentGif(this)
         }
         binding.tabsContainer.addOnTabSelectedListener(onTabSelectedListener)
         inhabitWithTabs()
@@ -104,21 +104,25 @@ class MainActivity : AppCompatActivity() {
                 if (loadState.urlIsDefined) {
                     binding.urlNotDefinedWarning.isGone = true
                     binding.contentGif.isVisible = true
+                    binding.shareBtn.isVisible = true
                 } else {
                     binding.urlNotDefinedWarning.isVisible = true
                     binding.contentGif.isGone = true
+                    binding.shareBtn.isGone = true
                 }
             }
             LoadState.Loading -> {
                 binding.loadingIndicator.isVisible = true
                 binding.tryAgainContainer.isGone = true
                 binding.urlNotDefinedWarning.isGone = true
+                binding.shareBtn.isGone = true
                 gifContainerSetVisible(true)
             }
             LoadState.Ended -> {
                 binding.loadingIndicator.isGone = true
                 binding.tryAgainContainer.isGone = true
                 binding.urlNotDefinedWarning.isGone = true
+                binding.shareBtn.isGone = true
                 binding.labelGif.setText(R.string.last_loaded)
                 gifContainerSetVisible(true)
             }
@@ -126,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                 binding.loadingIndicator.isGone = true
                 binding.tryAgainContainer.isVisible = true
                 binding.urlNotDefinedWarning.isGone = true
+                binding.shareBtn.isGone = true
                 gifContainerSetVisible(false)
             }
             is LoadState.Failed -> {
@@ -138,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                         binding.loadingIndicator.isGone = true
                         binding.tryAgainContainer.isGone = true
                         binding.urlNotDefinedWarning.isGone = true
+                        binding.shareBtn.isGone = true
                         gifContainerSetVisible(true)
                     }
                 }

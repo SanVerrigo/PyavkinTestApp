@@ -2,7 +2,7 @@ package com.pyavkin.pyavkintestapp
 
 sealed class LoadState {
 
-    object Loaded : LoadState()
+    class Loaded(val urlIsDefined: Boolean) : LoadState()
 
     object Loading : LoadState()
 

@@ -97,25 +97,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun setState(loadState: LoadState) {
         when (loadState) {
-            LoadState.Loaded -> {
+            is LoadState.Loaded -> {
                 binding.loadingIndicator.isGone = true
-                binding.tryAgainContainer.isVisible = false
+                binding.tryAgainContainer.isGone = true
                 gifContainerSetVisible(true)
+                if (loadState.urlIsDefined) {
+                    binding.urlNotDefinedWarning.isGone = true
+                    binding.contentGif.isVisible = true
+                } else {
+                    binding.urlNotDefinedWarning.isVisible = true
+                    binding.contentGif.isGone = true
+                }
             }
             LoadState.Loading -> {
                 binding.loadingIndicator.isVisible = true
-                binding.tryAgainContainer.isVisible = false
+                binding.tryAgainContainer.isGone = true
+                binding.urlNotDefinedWarning.isGone = true
                 gifContainerSetVisible(true)
             }
             LoadState.Ended -> {
                 binding.loadingIndicator.isGone = true
+                binding.tryAgainContainer.isGone = true
+                binding.urlNotDefinedWarning.isGone = true
                 binding.labelGif.setText(R.string.last_loaded)
-                binding.tryAgainContainer.isVisible = false
                 gifContainerSetVisible(true)
             }
             LoadState.NetworkIsNotAvailable -> {
                 binding.loadingIndicator.isGone = true
                 binding.tryAgainContainer.isVisible = true
+                binding.urlNotDefinedWarning.isGone = true
                 gifContainerSetVisible(false)
             }
             is LoadState.Failed -> {
@@ -126,7 +136,8 @@ class MainActivity : AppCompatActivity() {
                     else -> {
                         Toast.makeText(this, loadState.error.message, Toast.LENGTH_SHORT).show()
                         binding.loadingIndicator.isGone = true
-                        binding.tryAgainContainer.isVisible = false
+                        binding.tryAgainContainer.isGone = true
+                        binding.urlNotDefinedWarning.isGone = true
                         gifContainerSetVisible(true)
                     }
                 }

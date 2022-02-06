@@ -1,6 +1,7 @@
 package com.pyavkin.pyavkintestapp
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -173,6 +174,18 @@ class MainViewModel(context: Context) : ViewModel() {
     override fun onCleared() {
         disposables.dispose()
         super.onCleared()
+    }
+
+    fun shareCurrentGif(context: Context) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/gif"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "GIF-image")
+        intent.putExtra(
+            Intent.EXTRA_TEXT,
+            context.getString(R.string.share_gif_text, currentGifDescription.value)
+        )
+        intent.putExtra(Intent.EXTRA_STREAM, currentGifUri.value)
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gif)))
     }
 
     companion object {

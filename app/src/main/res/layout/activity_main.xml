@@ -82,8 +82,7 @@
       app:layout_constraintDimensionRatio="1:1"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tabs_container"
-      tools:visibility="gone">
+      app:layout_constraintTop_toBottomOf="@id/tabs_container">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -162,5 +161,18 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@id/back_btn"
       app:layout_constraintTop_toTopOf="@id/back_btn" />
+
+  <ImageView
+      android:id="@+id/share_btn"
+      style="@style/RoundIconButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_share"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/back_btn"
+      app:layout_constraintEnd_toEndOf="@id/gif_container"
+      app:layout_constraintStart_toEndOf="@id/forward_btn"
+      app:layout_constraintTop_toTopOf="@id/back_btn"
+      app:tint="@color/primary_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

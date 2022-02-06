@@ -2,12 +2,17 @@
   <string name="app_name">PyavkinTestApp</string>
   <string name="base_url">https://developerslife.ru/</string>
   <string name="developers_life">Developers Life</string>
+
+  <string name="random">random</string>
   <string name="latest">latest</string>
   <string name="hot">hot</string>
   <string name="top">top</string>
-  <string name="top_label">Лучшие</string>
-  <string name="hot_label">Горячие</string>
+
+  <string name="random_label">Рандом</string>
   <string name="latest_label">Последние</string>
+  <string name="hot_label">Горячие</string>
+  <string name="top_label">Лучшие</string>
+
   <string name="last_loaded">В данном разделе больше нет гифочек! Посмотрите в других</string>
   <string name="try_again">Повторить</string>
   <string name="internet_loss_warning">Произошла ошибка при загрузке данных. Проверьте подключение к сети</string>

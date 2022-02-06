@@ -8,5 +8,7 @@ interface GifRepo {
 
     fun getGifs(section: String, page: Int): Single<List<GifEntity>>
 
+    fun getRandomGif(): Single<GifEntity>
+
     fun downloadGif(url: String, id: Long, section: String, name: String): Single<Uri>
 }

@@ -20,6 +20,10 @@ class GifRepoImpl(private val context: Context) : GifRepo {
             .map { gifResult -> gifResult.result }
     }
 
+    override fun getRandomGif(): Single<GifEntity> {
+        return gifService.api.getRandomGif()
+    }
+
     override fun downloadGif(url: String, id: Long, section: String, name: String): Single<Uri> {
         val fileName = getGifName(name, id)
         val file = cacheManager.createCacheFile(fileName)

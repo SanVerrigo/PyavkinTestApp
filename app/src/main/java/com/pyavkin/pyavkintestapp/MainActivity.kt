@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
 
     private val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
 
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            viewModel.setCurrentSection(tab.let { it?.tag as String })
+        override fun onTabSelected(tab: TabLayout.Tab) {
+            val section = TabInfo.Section.valueOf(tab.tag as String)
+            viewModel.setCurrentSection(section)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -78,20 +79,16 @@ class MainActivity : AppCompatActivity() {
         binding.tabsContainer.selectTab(binding.tabsContainer.getTabAt(0))
     }
 
-    private fun setTabBySection(section: String) {
+    private fun setTabBySection(section: TabInfo.Section) {
         val tab = binding.tabsContainer.newTab()
-        tab.tag = section
-        when (section) {
-            getString(R.string.top) -> {
-                tab.setText(R.string.top_label)
-            }
-            getString(R.string.hot) -> {
-                tab.setText(R.string.hot_label)
-            }
-            getString(R.string.latest) -> {
-                tab.setText(R.string.latest_label)
-            }
+        tab.tag = section.toString()
+        val tabName = when (section) {
+            TabInfo.Section.RANDOM -> R.string.random_label
+            TabInfo.Section.TOP -> R.string.top_label
+            TabInfo.Section.HOT -> R.string.hot_label
+            TabInfo.Section.LATEST -> R.string.latest_label
         }
+        tab.setText(tabName)
         binding.tabsContainer.addTab(tab)
     }
 

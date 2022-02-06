@@ -10,6 +10,7 @@ import com.pyavkin.pyavkintestapp.api.GifRepoImpl
 import com.pyavkin.pyavkintestapp.api.entities.GifEntity
 import com.pyavkin.pyavkintestapp.utils.NetworkUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -34,9 +35,10 @@ class MainViewModel(context: Context) : ViewModel() {
     private lateinit var loadingGifDisposable: Disposable
 
     val tabs = listOf(
-        TabInfo(context.getString(R.string.latest)),
-        TabInfo(context.getString(R.string.hot)),
-        TabInfo(context.getString(R.string.top)),
+        TabInfo(TabInfo.Section.RANDOM),
+        TabInfo(TabInfo.Section.LATEST),
+        TabInfo(TabInfo.Section.HOT),
+        TabInfo(TabInfo.Section.TOP),
     )
 
     private val networkUtils = NetworkUtils(context)
@@ -50,10 +52,16 @@ class MainViewModel(context: Context) : ViewModel() {
             val gifInfo = tabInfo.loadedGifs[tabInfo.currentLoadedGifInd]
             currentGifDescription.postValue(gifInfo.description)
             refreshButtonsState()
-            loadGif(gifInfo.url, gifInfo.id, tabInfo.section, gifInfo.description)
+            loadGif(gifInfo.url, gifInfo.id, tabInfo.section.sectionName, gifInfo.description)
         } else {
             gifState.postValue(LoadState.Loading)
-            repo.getGifs(tabInfo.section, tabInfo.pageToLoad)
+            val gifsSingle: Single<List<GifEntity>> =
+                if (tabInfo.section == TabInfo.Section.RANDOM) {
+                    repo.getRandomGif().map { listOf(it) }
+                } else {
+                    repo.getGifs(tabInfo.section.sectionName, tabInfo.pageToLoad)
+                }
+            gifsSingle
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -67,7 +75,9 @@ class MainViewModel(context: Context) : ViewModel() {
                         } else {
                             val gifInfo = tabInfo.loadedGifs[tabInfo.currentLoadedGifInd]
                             currentGifDescription.postValue(gifInfo.description)
-                            loadGif(gifInfo.url, gifInfo.id, tabInfo.section, gifInfo.description)
+                            loadGif(
+                                gifInfo.url, gifInfo.id, tabInfo.section.name, gifInfo.description
+                            )
                         }
                     },
                     { error ->
@@ -96,7 +106,7 @@ class MainViewModel(context: Context) : ViewModel() {
             ).also { disposables.add(it) }
     }
 
-    fun setCurrentSection(section: String) {
+    fun setCurrentSection(section: TabInfo.Section) {
         val tabInfo = tabs.first { it.section == section }
         currentTab.postValue(tabInfo)
     }

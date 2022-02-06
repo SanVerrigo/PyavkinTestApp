@@ -1,5 +1,6 @@
 package com.pyavkin.pyavkintestapp.api
 
+import com.pyavkin.pyavkintestapp.api.entities.GifEntity
 import com.pyavkin.pyavkintestapp.api.entities.GifResult
 import io.reactivex.rxjava3.core.Single
 import okhttp3.Response
@@ -16,6 +17,9 @@ interface GifApi {
         @Path("section") section: String,
         @Path("page") page: Int,
     ): Single<GifResult>
+
+    @GET("random?json=true")
+    fun getRandomGif(): Single<GifEntity>
 
     @GET
     @Streaming

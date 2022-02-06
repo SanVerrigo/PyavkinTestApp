@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Night colors -->
+  <color name="enabled_front_forward">@color/white</color>
+  <color name="enabled_front_back">@color/white</color>
+
+  <color name="disabled_gray_background">#DBDBDB</color>
+  <color name="disabled_gray">#373737</color>
+  <color name="enabled_background">@color/yellow_3_night</color>
+
+  <color name="primary_text">@color/white</color>
+  <color name="additional_text">@color/white</color>
+  <color name="placeholder_color">@color/black</color>
+
+</resources>

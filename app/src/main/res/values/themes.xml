@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- Base application theme. -->
+  <style name="Theme.PyavkinTestApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">@color/yellow_2_day</item>
+    <item name="colorPrimaryVariant">@color/yellow_3_day</item>
+    <item name="colorOnPrimary">@color/white</item>
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary">@color/yellow_2_day</item>
+    <item name="colorSecondaryVariant">@color/yellow_2_day</item>
+    <item name="colorOnSecondary">@color/black</item>
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    <!-- Customize your theme here. -->
+  </style>
+
+  <style name="DisablingFAB" parent="Widget.MaterialComponents.FloatingActionButton">
+    <item name="backgroundTint">@color/fab_bg_enabling</item>
+    <item name="android:backgroundTint">@color/fab_bg_enabling</item>
+  </style>
+
+  <style name="DisablingFAB.Forward">
+    <item name="tint">@color/fab_forward_enabling</item>
+    <item name="android:tint">@color/fab_forward_enabling</item>
+  </style>
+
+  <style name="DisablingFAB.Back">
+    <item name="tint">@color/fab_back_enabling</item>
+    <item name="android:tint">@color/fab_back_enabling</item>
+  </style>
+
+  <style name="Text.Size16.Additional.Medium.Button">
+    <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">4dp</item>
+    <item name="android:paddingTop">4dp</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:focusable">true</item>
+    <item name="android:clickable">true</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:background">@drawable/background_ripple</item>
+  </style>
+</resources>
